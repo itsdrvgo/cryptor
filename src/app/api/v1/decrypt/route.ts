@@ -8,7 +8,14 @@ export async function POST(req: NextRequest) {
         const payload = await req.json();
 
         const { key, text } = decryptSchema.parse(payload);
-        const message = EncryptionSystem.decrypt(text, key);
+
+        const formattedKey = key.replace(/^`/, "").replace(/`$/, "").trim();
+        const formattedText = text
+            .replace(/^```/, "")
+            .replace(/```$/, "")
+            .trim();
+
+        const message = EncryptionSystem.decrypt(formattedText, formattedKey);
 
         return CResponse({
             message: "OK",
