@@ -18,4 +18,10 @@ export const menu: Menu[] = [
         href: "/",
         icon: "unlock",
     },
+    {
+        name: "View Source",
+        href: "https://github.com/itsdrvgo/cryptor",
+        isExternal: true,
+        icon: "github",
+    },
 ];

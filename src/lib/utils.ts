@@ -175,3 +175,15 @@ export function CResponse<T>({
         }
     );
 }
+
+export function convertNumberToShortForm(count: number) {
+    const suffixes = ["", "K", "M", "B", "T"];
+    let i = 0;
+
+    while (count >= 1000) {
+        count /= 1000;
+        i++;
+    }
+
+    return `${Math.round(count)}${suffixes[i]}`;
+}

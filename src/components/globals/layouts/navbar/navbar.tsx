@@ -3,6 +3,7 @@
 import { Icons } from "@/components/icons";
 import { Link } from "@/components/ui/link";
 import { menu } from "@/config/menu";
+import { siteConfig } from "@/config/site";
 import { useNavbarStore } from "@/lib/store";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
@@ -40,7 +41,11 @@ export function Navbar() {
             className="sticky inset-x-0 top-0 z-50 flex h-auto w-full items-center justify-center border-b bg-background px-4 py-3 backdrop-blur-md backdrop-saturate-100 md:py-4"
             data-menu-open={isMenuOpen}
         >
-            <nav className="flex w-full max-w-5xl items-center justify-end gap-5 md:justify-center">
+            <nav className="flex w-full max-w-5xl items-center justify-between gap-5">
+                <Link type="link" href="/" className="text-2xl font-semibold">
+                    {siteConfig.name}
+                </Link>
+
                 <div className="flex items-center gap-6">
                     <ul className="hidden items-center gap-2 sm:flex md:gap-4">
                         {!!menu.length &&

@@ -2,10 +2,12 @@
 
 import { Icons } from "@/components/icons";
 import { Link } from "@/components/ui/link";
+import { REPO_API_ENDPOINT, REPO_URL } from "@/config/const";
 import { menu } from "@/config/menu";
 import { useNavbarStore } from "@/lib/store/navbar";
-import { cn } from "@/lib/utils";
+import { cFetch, cn, convertNumberToShortForm } from "@/lib/utils";
 import { GenericProps } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 import { ElementRef, useEffect, useRef } from "react";
 
 export function NavbarMob({ className, ...props }: GenericProps) {
@@ -39,6 +41,17 @@ export function NavbarMob({ className, ...props }: GenericProps) {
         };
     }, [setIsMenuOpen]);
 
+    const { data: starCount } = useQuery({
+        queryKey: ["ev0", "stars", "count"],
+        queryFn: async () => {
+            const data = await cFetch<{
+                stargazers_count?: number;
+            }>(REPO_API_ENDPOINT);
+            return data.stargazers_count ?? 0;
+        },
+        initialData: 0,
+    });
+
     return (
         <div
             aria-label="Mobile Menu"
@@ -60,17 +73,13 @@ export function NavbarMob({ className, ...props }: GenericProps) {
                 ref={navListRef}
             >
                 <div>
-                    {menu.map((item, index) => {
+                    {menu.slice(0, 2).map((item, index) => {
                         const Icon = Icons[item.icon ?? "add"];
 
                         return (
                             <li
                                 key={index}
-                                className={cn(
-                                    index !== menu.length - 1
-                                        ? "border-b border-foreground/20"
-                                        : ""
-                                )}
+                                className="border-b border-foreground/20"
                                 aria-label="Mobile Menu Item"
                             >
                                 <Link
@@ -86,6 +95,22 @@ export function NavbarMob({ className, ...props }: GenericProps) {
                             </li>
                         );
                     })}
+
+                    <Link
+                        type="link"
+                        href={REPO_URL}
+                        isExternal
+                        className="mt-5 flex items-center justify-between gap-4 rounded-md bg-primary p-3"
+                    >
+                        <span>Star us on GitHub</span>
+
+                        <div className="flex items-center gap-2">
+                            <span className="text-white">
+                                {convertNumberToShortForm(starCount)}
+                            </span>
+                            <Icons.star className="size-5" />
+                        </div>
+                    </Link>
                 </div>
             </ul>
         </div>
