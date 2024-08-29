@@ -1,4 +1,4 @@
-import { Navbar, NavbarMob } from "@/components/globals/layouts";
+import { Footer, Navbar, NavbarMob } from "@/components/globals/layouts";
 import { siteConfig } from "@/config/site";
 import { LayoutProps } from "@/types";
 import { Metadata } from "next";
@@ -16,6 +16,7 @@ function Layout({ children }: LayoutProps) {
         <div className="relative flex min-h-screen flex-col">
             <Navbar />
             <main className="flex flex-1 flex-col">{children}</main>
+            <Footer />
             <NavbarMob />
         </div>
     );
