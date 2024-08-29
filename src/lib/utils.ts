@@ -20,7 +20,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function getAbsoluteURL(path: string = "/") {
     if (process.env.VERCEL_URL)
-        return "https://" + process.env.VERCEL_URL + path;
+        return "https://" + "cryptor-itsdrvgo.vercel.app" + path;
     return "http://localhost:" + (process.env.PORT ?? 3000) + path;
 }
 
